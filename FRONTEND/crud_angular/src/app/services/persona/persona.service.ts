@@ -13,7 +13,7 @@ export class PersonaService {
 //inyectar el servicio de httpclient
 http = inject(HttpClient);
 
-private apiUrl = 'https://localhost:7000/api/persona';
+private apiUrl = 'https://localhost:7000/api/persona'; // TERMINADO
 
 constructor() { }
 

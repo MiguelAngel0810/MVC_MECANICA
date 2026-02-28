@@ -1,26 +1,26 @@
-using DbModel.demoDb;
+using DbModel.mecanica;
 using Microsoft.EntityFrameworkCore;
-using Mvc.Bussnies.Persona;
-using Mvc.Repository.PersonaRepo.Contratos;
-using Mvc.Repository.PersonaRepo.Implementacion;
+using Mvc.Bussnies.Vehiculo;
+using Mvc.Repository.VehiculoRepo.Contratos;
+using Mvc.Repository.VehiculoRepo.Implementacion;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 // Configurar la conexión a la base de datos
-builder.Services.AddDbContext<_demoContext>(options =>
+builder.Services.AddDbContext<_mecanicaContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("demoDb");
+    var connectionString = builder.Configuration.GetConnectionString("mecanico_1");
     // Evita AutoDetect (que abre una conexión en startup). Usa la versión conocida del servidor.
     options.UseMySql(connectionString, ServerVersion.Parse("8.0.45-mysql"));
 });
 
 // Inyección de dependencias - Repositories
-builder.Services.AddScoped<IPersonaRepository, PersonaRepository>();
+builder.Services.AddScoped<IVehiculoRepository, VehiculoRepository>();
 
 // Inyección de dependencias - Business Logic
-builder.Services.AddScoped<IPersonaBussnies, PersonaBussnies>();
+builder.Services.AddScoped<IVehiculoBussnies, VehiculoBussnies>();
 
 // Configurar CORS
 builder.Services.AddCors(options =>
