@@ -51,13 +51,16 @@ namespace Mvc.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = vehiculo.VehiculoId }, vehiculo);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<VehiculoDto>> Update([FromBody] VehiculoDto request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<VehiculoDto>> Update(int id, [FromBody] VehiculoDto request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            // Aseguramos que el id del DTO coincida con el de la ruta
+            request.VehiculoId = id;
 
             VehiculoDto? vehiculo = await _vehiculoBussnies.Update(request);
 

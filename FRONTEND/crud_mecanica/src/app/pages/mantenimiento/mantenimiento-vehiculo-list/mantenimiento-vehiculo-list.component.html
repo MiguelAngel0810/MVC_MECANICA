@@ -1,0 +1,81 @@
+<div class="container py-3">
+  <div class="card mb-3">
+    <div class="card-body">
+      <h2 class="h5 mb-3">Filtros de búsqueda</h2>
+
+      <form class="row g-3" aria-label="Filtros de búsqueda de vehículos">
+        <div class="col-12 col-md-6">
+          <label for="filtroPlaca" class="form-label">Placa</label>
+          <input id="filtroPlaca" type="text" class="form-control" placeholder="Ingrese placa" />
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label for="filtroMarca" class="form-label">Marca</label>
+          <input id="filtroMarca" type="text" class="form-control" placeholder="Ingrese marca" />
+        </div>
+
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <button type="button" class="btn btn-primary">Buscar</button>
+          <button type="button" class="btn btn-outline-secondary">Limpiar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body table-wrapper">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Placa</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Año</th>
+              <th scope="col">
+                <button type="button" class="btn btn-primary" (click)="abrirAgregar()">Agregar</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (vehiculo of vehiculos(); track vehiculo.vehiculoId) {
+              <tr>
+                <td>{{ vehiculo.vehiculoId }}</td>
+                <td>{{ vehiculo.placa }}</td>
+                <td>{{ vehiculo.marca }}</td>
+                <td>{{ vehiculo.modelo }}</td>
+                <td>{{ vehiculo.anio }}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-warning me-2" (click)="abrirEditar(vehiculo)">
+                    Editar
+                  </button>
+                  <button type="button" class="btn btn-sm btn-danger" (click)="eliminarVehiculo(vehiculo)">
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="text-center">No hay registros para mostrar.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de edición/agregado de vehículo -->
+  @if (mostrarModal) {
+    <div class="modal-backdrop-custom" (click)="cerrarModal()"></div>
+    <div class="modal-custom" role="dialog" aria-modal="true" aria-label="Ventana de edición de vehículo">
+      <app-mantenimiento-vehiculo-editar
+        [vehiculo]="vehiculoSeleccionado"
+        [modo]="modoEdicion"
+        (cancelado)="cerrarModal()"
+        (guardado)="onGuardado($event)">
+      </app-mantenimiento-vehiculo-editar>
+    </div>
+  }
+</div>

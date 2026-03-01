@@ -1,0 +1,21 @@
+-- Tabla principal: Vehículos
+CREATE TABLE Vehiculos (
+    vehiculo_id INT PRIMARY KEY AUTO_INCREMENT,
+    placa VARCHAR(10) NOT NULL UNIQUE,
+    marca VARCHAR(50) NOT NULL,
+    modelo VARCHAR(50) NOT NULL,
+    anio INT NOT NULL
+);
+
+-- Tabla dependiente: Mantenimientos
+CREATE TABLE Mantenimientos (
+    mantenimiento_id INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE NOT NULL,
+    tipo_servicio VARCHAR(100) NOT NULL,
+    costo DECIMAL(10,2) NOT NULL,
+    detalle TEXT,
+    vehiculo_id INT NOT NULL,
+    FOREIGN KEY (vehiculo_id) REFERENCES Vehiculos(vehiculo_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
